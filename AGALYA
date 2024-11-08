@@ -1,0 +1,98 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_ROOMS 10
+#define MAX_GUESTS 10
+
+typedef struct {
+    int roomNumber;
+    char guestName[50];
+    int daysStayed;
+    float bill;
+} Room;
+
+Room rooms[MAX_ROOMS];
+int numRooms = 0;
+
+void addRoom() {
+    if (numRooms < MAX_ROOMS) {
+        printf("Enter room number: ");
+        scanf("%d", &rooms[numRooms].roomNumber);
+        printf("Enter guest name: ");
+        scanf("%s", rooms[numRooms].guestName);
+        printf("Enter number of days stayed: ");
+        scanf("%d", &rooms[numRooms].daysStayed);
+        rooms[numRooms].bill = rooms[numRooms].daysStayed * 100; // assume $100 per day
+        numRooms++;
+        printf("Room added successfully!\n");
+    } else {
+        printf("Hotel is fully booked!\n");
+    }
+}
+void deleteRoom() {
+    scanf("%d", &roomNumber);
+    for (int i = 0; i < numRooms; i++) {
+        if (rooms[i].roomNumber == roomNumber) {
+            for (int j = i; j < numRooms - 1; j++) {
+                rooms[j] = rooms[j + 1];
+            }
+            numRooms--;
+            printf("Room deleted successfully!\n");
+            return;
+        }
+    }
+    printf("Room not found!\n");
+}
+
+void displayRooms() {
+    printf("Room Number\tGuest Name\tDays Stayed\tBill\n");
+    for (int i = 0; i < numRooms; i++) {
+        printf("%d\t\t%s\t\t%d\t\t%.2f\n", rooms[i].roomNumber, rooms[i].guestName, rooms[i].daysStayed, rooms[i].bill);
+    }
+}
+
+void searchRoom() {
+    int roomNumber;
+    printf("Enter room number to search: ");
+    scanf("%d", &roomNumber);
+    for (int i = 0; i < numRooms; i++) {
+        if (rooms[i].roomNumber == roomNumber) {
+            printf("Room Number\tGuest Name\tDays Stayed\tBill\n");
+            printf("%d\t\t%s\t\t%d\t\t%.2f\n", rooms[i].roomNumber, rooms[i].guestName, rooms[i].daysStayed, rooms[i].bill);
+            return;
+        }
+    }
+    printf("Room not found!\n");
+}
+
+int main() {
+    int choice;
+    while (1) {
+        printf("1. Add Room\n");
+        printf("2. Delete Room\n");
+        printf("3. Display Rooms\n");
+        printf("4. Search Room\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                addRoom();
+                break;
+            case 2:
+                deleteRoom();
+                break;
+            case 3:
+                displayRooms();
+                break;
+            case 4:
+                searchRoom();
+                break;
+            case 5:
+                return 0;
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+    return 0;
+}
